@@ -1,4 +1,4 @@
-@extends('marketing::layouts.app')
+ @extends('marketing::layouts.app')
 
 @section('title', __('Social Sharing'))
 
@@ -7,7 +7,18 @@
 @endsection
 
 @section('content')
+    <!-- Create !-->
+    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+        <div>
 
+        </div>
+        <div>
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('social.credentials.create', ['account' => $account->id]) }}">
+                <i class="fa fa-plus mr-1"></i> Create Connection
+            </a>
+        </div>
+    </div>
+    <!-- Cards !-->
     <!-- Cards !-->
     <div class="card">
         <div class="card-table table-responsive">
@@ -18,7 +29,8 @@
                         {{ __('ID') }}
                     </th>
                     <th>{{ __('Type') }}</th>
-                    <th>{{ __('Actions') }}</th>
+                    <th>{{ __('Information') }}</th>
+                    <th class="text-right">{{ __('Actions') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,11 +43,19 @@
                             {{  $config->type }}
                         </td>
                         <td>
-                            <a class="btn btn-info {{ request()->routeIs('social.linkedin') ? 'active'  : '' }}"
-                               href="{{ route('social.linkedin.login', ['account' => $account->id]) }}">
-                                {{ __('Login LinkedIn') }}
+                           @todo get the access token validation or date when expires for each social account
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-info"
+                               href="{{ route('social.login', ['account' => $config->social_account_id, 'provider' => $config->type]) }}">
+                                {{ __('Login') }} {{ $config->type }}
+                            </a>
+                            <a class="btn btn-danger"
+                               href="{{ route('social.credentials.edit', ['account' => $config->social_account_id, 'provider' => $config->type]) }}">
+                                {{ __('Edit') }} {{ $config->type }}
                             </a>
                         </td>
+
                     </tr>
                 @endforeach
                 </tbody>

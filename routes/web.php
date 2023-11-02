@@ -105,3 +105,4 @@ Route::middleware(['auth', 'verified', RequireWorkspace::class])->group(
 MarketingPortal::publicWebRoutes();
 
 
+

@@ -18,6 +18,7 @@ Another unique feature of News AI is its ability to manage multiple WordPress we
 
 Overall, News AI is a powerful tool that simplifies the process of content creation and distribution. With its advanced AI-powered features and marketing automation tools, News AI is a must-have for content creators and marketers who want to stay ahead of the competition. Whether you're a blogger, content marketer, or business owner, News AI can help you save time, increase engagement, and grow your audience.
 
+
 ## Why use News AI?
 - **News AI** will be able to generate news articles based on a given topic.
 - **News AI** Will allow you to manage marketing campaigns.
@@ -26,6 +27,13 @@ Overall, News AI is a powerful tool that simplifies the process of content creat
 
 ## Status
 This project is currently in development. The goal is to have a working prototype by the end of 2023.
+
+### Features
+- [x] Generate news articles based on a given topic.
+- [x] Manage marketing campaigns.
+- [x] Share content on your social media accounts.
+
+
 
 ## Demo
 https://user-images.githubusercontent.com/2276408/227950857-6c6fd350-913d-4abe-9594-b004ded35715.mp4

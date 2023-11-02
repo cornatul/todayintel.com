@@ -2,48 +2,93 @@
 
 namespace Cornatul\Social\Repositories;
 
+use Cornatul\Social\Actions\UpdateSocialAccountConfiguration;
 use Cornatul\Social\Contracts\SocialContract;
 use Cornatul\Social\DTO\ConfigurationDTO;
+use Cornatul\Social\Models\SocialAccount;
 use Cornatul\Social\Models\SocialAccountConfiguration;
 use Cornatul\Social\Service\SocialOauthService;
 use Illuminate\Database\QueryException;
+use League\OAuth2\Client\Provider\Facebook;
+use League\OAuth2\Client\Provider\Google;
 use League\OAuth2\Client\Provider\LinkedIn;
-use League\OAuth2\Client\Provider\Twitter;
+use Smolblog\OAuth2\Client\Provider\Twitter;
 use RuntimeException;
 
-class SocialRepository
+/**
+ *
+ */
+class SocialRepository implements SocialContract
 {
-
     private const ACCOUNT_TWITTER = 'twitter';
     private const ACCOUNT_LINKEDIN = 'linkedin';
     private const ACCOUNT_FACEBOOK = 'facebook';
+    private const ACCOUNT_GOOGLE = 'google';
 
-    private $providerClasses = [
+    private array $providerClasses = [
         self::ACCOUNT_TWITTER => Twitter::class,
         self::ACCOUNT_LINKEDIN => LinkedIn::class,
-        // Add other account types here if needed
+        self::ACCOUNT_FACEBOOK => Facebook::class,
+        self::ACCOUNT_GOOGLE => Google::class,
     ];
 
-    /**
-     * @throws \Exception
-     */
-    public final function getSocialService(int $account): SocialOauthService
+    public final function createAccount(string $name, int $userId): SocialAccount
     {
-        $data = SocialAccountConfiguration::find($account);
+        return SocialAccount::create([
+            'account' => $name,
+            'user_id' => $userId,
+        ]);
+    }
+    public final function getAccount(int $id): SocialAccount
+    {
+        return SocialAccount::with(['configuration'])->find($id)->first();
+    }
 
-        $credentials = ConfigurationDTO::from($data->configuration);
+    /**
+     * @param int $id
+     * @param string $name
+     * @param int $userId
+     * @return SocialAccount
+     */
+    public final function updateAccount(int $id, string $name, int $userId): SocialAccount
+    {
+        $account = SocialAccount::find($id);
+        $account->account = $name;
+        $account->user_id = $userId;
+        $account->save();
+        return $account;
+    }
 
-        if (!$credentials) {
-            throw new QueryException("Account with id {$account} not found in the database");
-        }
+    public final function destroyAccount(int $id): void
+    {
+        $account = SocialAccount::find($id);
+        $account->delete();
+    }
+    /**
+     * @throws RuntimeException
+     */
+    public final function getSocialService(): SocialOauthService
+    {
+
+        $account = request()->session()->get('account');
+        $provider = request()->session()->get('provider');
+
+        $data = SocialAccountConfiguration::where('social_account_id',$account)->where('type',$provider)->first();
+
+        $credentials = ConfigurationDTO::from($data);
 
         $providerClass = $this->providerClasses[$data->type] ?? null;
 
-        if (!$providerClass) {
-            throw new RuntimeException("This type of service is not supported");
+        if (is_null($providerClass)) {
+            throw new RuntimeException("This type of service is not supported or it is not implemented yet");
         }
 
-        $provider = new $providerClass($credentials->toArray());
+        $provider = new $providerClass((array) $credentials->configuration);
+
+        if($data->type === self::ACCOUNT_TWITTER){
+            session()->put('oauth2state', $provider->getState());
+            session()->put('oauth2verifier', $provider->getPkceVerifier());
+        }
 
         return new SocialOauthService($provider);
     }
@@ -51,27 +96,74 @@ class SocialRepository
     /**
      * @throws \Exception
      */
-    public function getAccountFromSession(): int
+    public final function updateAccountConfiguration(UpdateSocialAccountConfiguration $request,): SocialAccountConfiguration
     {
-        $account = session()->get('account');
+        $data = SocialAccountConfiguration::where('social_account_id',$request->input('id'))
+            ->where('type',$request->input('type'))->first();
 
-        if (!$account) {
-            throw new \Exception("Account not found in session");
+        if (!$data) {
+            throw new \Exception("Account with id {$request->input('account')} not found in the database");
         }
 
-        return $account;
+        $configuration = json_encode([
+            'clientId' =>  $request->input('clientId'),
+            'clientSecret' =>  $request->input('clientSecret'),
+            'redirectUri' => $request->input('redirectUri'),
+            'scopes' =>  explode(',', $request->input('scopes'))
+        ]);
+
+        $data->configuration = $configuration;
+        $data->save();
+        return $data;
     }
 
 
-    public final function saveAccountInformation(ConfigurationDTO $configurationDTO, int $account): void
+
+
+    public final function setSession(int $account, string $provider): self
     {
-        $data = SocialAccountConfiguration::find($account);
+        session()->put('account', $account);
+        session()->put('provider', $provider);
+        return $this;
+    }
 
-        if (!$data) {
-            throw new QueryException("Account with id {$account} not found in the database");
+    public final function destroySession(): self
+    {
+        session()->remove('account');
+        session()->remove('provider');
+        session()->remove('oauth2state');
+        session()->remove('oauth2verifier');
+        return $this;
+    }
+
+
+    /**
+     * @throws \Exception
+     */
+    public final function createAccountConfiguration(
+        int $account,
+        string $type,
+        string $clientId,
+        string $clientSecret,
+        string $redirectUri,
+        array $scopes
+    ): SocialAccountConfiguration
+    {
+
+        try {
+
+            return SocialAccountConfiguration::create([
+                'social_account_id' => $account,
+                'type' => $type,
+                'configuration' =>json_encode([
+                    'clientId' => $clientId,
+                    'clientSecret' => $clientSecret,
+                    'redirectUri' => $redirectUri,
+                    'scopes' => $scopes
+                ]),
+            ]);
+        } catch (QueryException $exception) {
+            throw new \Exception($exception->getMessage());
         }
-
-        $data->information = $configurationDTO->toJson();
-        $data->save();
     }
 }

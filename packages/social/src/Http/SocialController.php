@@ -2,7 +2,12 @@
 declare(strict_types=1);
 
 namespace Cornatul\Social\Http;
+use Cornatul\Social\Actions\CreateNewSocialAccount;
+use Cornatul\Social\Contracts\SocialContract;
 use Cornatul\Social\Models\SocialAccount;
+use Cornatul\Social\Repositories\SocialRepository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\View\View;
@@ -15,6 +20,14 @@ use Illuminate\View\View;
  */
 class SocialController extends Controller
 {
+    protected   SocialRepository $socialRepository;
+
+    public final function __construct(SocialRepository $socialRepository)
+    {
+        $this->socialRepository = $socialRepository;
+        $this->middleware('auth');
+    }
+
     public final function index(): View
     {
         $accounts = SocialAccount::paginate();
@@ -23,12 +36,28 @@ class SocialController extends Controller
         );
     }
 
-    public final function view(int $id): View
+    public final function view(int $account): View
     {
-        $account = SocialAccount::with('configuration')->find($id);
+        $account = $this->socialRepository->getAccount($account);
+
         return view('social::view',
         	compact('account')
         );
+    }
+
+    public final function create(): View
+    {
+        return view('social::create');
+    }
+
+    public final function save(CreateNewSocialAccount $request, SocialRepository $repository): RedirectResponse
+    {
+        $repository->createAccount(
+            $request->get('name'),
+            (int) $request->get('user_id')
+        );
+
+        return redirect()->route('social.index')->with('success','Account has been saved');
     }
 
 
@@ -40,8 +69,22 @@ class SocialController extends Controller
         );
     }
 
-    public final function update(int $id): View
+
+    public final function update(int $id, SocialRepository $repository, CreateNewSocialAccount $request): RedirectResponse
     {
-        //@todo implement this to update just the json field
+        $repository->updateAccount(
+            $id,
+            $request->get('name'),
+            (int) $request->get('user_id')
+        );
+
+        return redirect()->route('social.index')->with('success', 'Social Account updated!');
+    }
+
+
+    public final function destroy(int $id, SocialRepository $repository): RedirectResponse
+    {
+        $repository->destroyAccount($id);
+        return redirect()->route('social.index')->withMessage('Account has been deleted');
     }
 }

@@ -89,7 +89,6 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
-
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
@@ -102,7 +101,22 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
-
+        'elasticsearch' => [
+            'driver'       => 'elasticsearch',
+            'auth_type'    => env('ES_AUTH_TYPE', 'http'), //http, cloud or api
+            'hosts'        => explode(',', env('ES_HOSTS', 'http://localhost:9200')),
+            'username'     => env('ES_USERNAME', ''),
+            'password'     => env('ES_PASSWORD', ''),
+            'cloud_id'     => env('ES_CLOUD_ID', ''),
+            'api_id'       => env('ES_API_ID', ''),
+            'api_key'      => env('ES_API_KEY', ''),
+            'ssl_cert'     => env('ES_SSL_CERT', ''),
+            'index_prefix' => env('ES_INDEX_PREFIX', false),
+            'query_log'    => [
+                'index'      => 'laravel_query_logs', //Or false to disable query logging
+                'error_only' => true, //If false, the all queries are logged
+            ],
+        ],
     ],
 
     /*
