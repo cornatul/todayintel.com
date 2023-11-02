@@ -17,7 +17,6 @@ Auth::routes(
     ]
 );
 
-//Route::get('setup', 'SetupController@index')->name('setup');
 
 // Auth.
 Route::middleware('auth')->namespace('Auth')->group(
@@ -104,5 +103,8 @@ Route::middleware(['auth', 'verified', RequireWorkspace::class])->group(
 
 MarketingPortal::publicWebRoutes();
 
+//create route for the home controller that will be a get
+
+Route::get('/home', 'App\Http\Controllers\Home\HomeController@showHomepage')->name('home');
 
 
