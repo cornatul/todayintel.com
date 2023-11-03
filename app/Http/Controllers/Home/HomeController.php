@@ -12,6 +12,6 @@ class HomeController extends Controller
 {
     public function showHomePage(): View
     {
-        return view('presentation.home');
+        return view('pages.home');
     }
 }
