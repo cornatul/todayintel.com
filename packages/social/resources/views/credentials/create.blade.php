@@ -3,7 +3,7 @@
 @section('title', __('Configuration Sharing'))
 
 @section('heading')
-    {{ __('Create Connection for account') }}
+    {{ __('Create Connection for account') }} {{ $account->account }}
 @endsection
 
 @section('content')
@@ -20,13 +20,13 @@
             <form method="post" action="{{ route('social.credentials.save') }}">
                 @csrf
 
-                <input type="hidden" name="account" value="{{ $account }}">
+                <input type="hidden" name="account" value="{{ $account->id }}">
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">
                         {{ __('Client id') }}
                     </label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="clientId"
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="client_id"
                            placeholder=" {{ __('Client id') }}">
                 </div>
 
@@ -48,7 +48,7 @@
                     <label for="exampleInputEmail1">
                         {{ __('Client Secret') }}
                     </label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="clientSecret"
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="client_secret"
                            placeholder="{{ __('Client Secret') }}">
                 </div>
 
@@ -56,16 +56,8 @@
                     <label for="exampleInputEmail1">
                         {{ __('Redirect Uri') }}
                     </label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="redirectUri"
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="redirect"
                            placeholder=" {{ __('Redirect Uri') }}">
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleInputEmail1">
-                        {{ __('Scopes') }}
-                    </label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="scopes"
-                           placeholder=" {{ __('Scopes') }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

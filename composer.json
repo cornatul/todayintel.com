@@ -1,7 +1,7 @@
 {
     "name": "cornatul/engine",
     "type": "project",
-    "description": "News Cms it's a cms that allows users to read news in a more clean way",
+    "description": "Get daily intelligence from the web and increase your business reach",
     "license": "MIT",
     "require": {
         "php": "^8.1|^8.2",

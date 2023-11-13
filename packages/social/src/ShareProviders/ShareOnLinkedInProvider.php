@@ -11,6 +11,7 @@ class ShareOnLinkedInProvider implements ShareContract
         $client = new \GuzzleHttp\Client();
 
         $linkedinAccessToken = $userInformationDTO->token;
+
         $shareContent = 'Content you want to post on LinkedIn';
 
 

@@ -37,27 +37,21 @@
                     ?>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Client Id</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="clientId"
-                           value="{{ $credentials->configuration->clientId ?? '' }}"
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="client_id"
+                           value="{{ $credentials->configuration->client_id ?? '' }}"
                            placeholder="Enter Client ID">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Client Secret</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="clientSecret"
-                           value="{{ $credentials->configuration->clientSecret ?? '' }}"
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="client_secret"
+                           value="{{ $credentials->configuration->client_secret ?? '' }}"
                            placeholder="Enter Client Secret">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Client Redirect Url</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="redirectUri"
-                           value="{{ $credentials->configuration->redirectUri ?? '' }}"
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="redirect"
+                           value="{{ $credentials->configuration->redirect ?? '' }}"
                            placeholder="Enter Client Redirect">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Scopes</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="scopes"
-                           value="{{  implode('', $credentials->configuration->scopes) ?? '' }}"
-                           placeholder="Enter Client Scopes">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

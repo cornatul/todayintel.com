@@ -5,6 +5,7 @@ namespace Cornatul\Social\Http;
 use Cornatul\Social\Actions\CreateSocialAccountConfiguration;
 use Cornatul\Social\Actions\UpdateSocialAccountConfiguration;
 use Cornatul\Social\Models\SocialAccountConfiguration;
+use Cornatul\Social\Repositories\SocialConfigurationRepository;
 use Cornatul\Social\Repositories\SocialRepository;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -15,15 +16,23 @@ use Illuminate\View\View;
 
 class SocialCredentialsController extends Controller
 {
+    private SocialConfigurationRepository $socialConfigurationRepository;
     private SocialRepository $socialRepository;
 
-    public function __construct(SocialRepository $socialRepository)
+    public function __construct(
+        SocialConfigurationRepository $socialConfigurationRepository,
+        SocialRepository $socialRepository
+    )
     {
+        $this->socialConfigurationRepository = $socialConfigurationRepository;
+
         $this->socialRepository = $socialRepository;
     }
 
-    public final function create(int $account): View|Application
+    public final function create(int $accountID): View|Application
     {
+        $account = $this->socialRepository->getAccount($accountID);
+
         return view('social::credentials.create', [
             'account' => $account,
         ]);
@@ -35,7 +44,7 @@ class SocialCredentialsController extends Controller
      */
     public final function edit(int $account, string $provider): View|Application
     {
-        $credentials = $this->socialRepository->getAccountConfiguration($account, $provider);
+        $credentials = $this->socialConfigurationRepository->getAccountConfiguration($account, $provider);
 
         return view('social::credentials.edit', [
             'credentials' => $credentials,
@@ -51,7 +60,7 @@ class SocialCredentialsController extends Controller
      */
     public final function update(UpdateSocialAccountConfiguration $request): RedirectResponse
     {
-        $this->socialRepository->updateAccountConfiguration($request);
+        $this->socialConfigurationRepository->updateAccountConfiguration($request);
 
         return redirect()->route('social.index')->with('success', 'Credentials updated successfully');
     }
@@ -59,23 +68,28 @@ class SocialCredentialsController extends Controller
 
     /**
      * @method save
-     * @param UpdateSocialAccountConfiguration $request
+     * @param CreateSocialAccountConfiguration $request
      * @return RedirectResponse
      * @throws \Exception
      */
     public final function save(CreateSocialAccountConfiguration $request): RedirectResponse
     {
 
-        $this->socialRepository->createAccountConfiguration(
-            $request->input('account'),
-            $request->input('type'),
-            $request->input('clientId'),
-            $request->input('clientSecret'),
-            $request->input('redirectUri'),
-            explode(',', $request->input('scopes'))
-        );
+        $this->socialConfigurationRepository->createAccountConfiguration($request);
 
-        return redirect()->route('social.index')->with('success', 'Credentials created successfully');
+        return redirect()->route('social.index')
+            ->with('success', 'Credentials created successfully');
     }
 
+    /**
+     * @param int $account
+     * @param string $provider
+     * @return RedirectResponse
+     */
+    public final function destroy(int $account, string $provider): RedirectResponse
+    {
+        $this->socialConfigurationRepository->destroyAccountConfiguration($account, $provider);
+
+        return redirect()->route('social.index')->with('success', 'Credentials deleted successfully');
+    }
 }

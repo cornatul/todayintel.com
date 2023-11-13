@@ -20,15 +20,15 @@ use Illuminate\View\View;
  */
 class SocialController extends Controller
 {
-    protected   SocialRepository $socialRepository;
+    protected  SocialRepository $socialRepository;
 
     public final function __construct(SocialRepository $socialRepository)
     {
-        $this->socialRepository = $socialRepository;
         $this->middleware('auth');
+        $this->socialRepository = $socialRepository;
     }
 
-    public final function index(): View
+    public final function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
     {
         $accounts = SocialAccount::paginate();
         return view('social::index',
@@ -36,10 +36,9 @@ class SocialController extends Controller
         );
     }
 
-    public final function view(int $account): View
+    public final function view(int $accountID): View
     {
-        $account = $this->socialRepository->getAccount($account);
-
+        $account = $this->socialRepository->getAccount($accountID);
         return view('social::view',
         	compact('account')
         );

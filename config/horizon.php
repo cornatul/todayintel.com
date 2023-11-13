@@ -238,6 +238,15 @@ return [
                 'maxProcesses' => 10,
                 'tries' => 1,
             ],
+            'supervisor-9' => [
+                'connection' => 'rabbitmq',
+                'queue' => ['news-extractor'],
+                'processes' => 10,
+                'balance' => 'auto',
+                'minProcesses' => 2,
+                'maxProcesses' => 10,
+                'tries' => 1,
+            ],
         ],
         'local' => [
             'supervisor-1' => [
@@ -304,6 +313,15 @@ return [
             'supervisor-8' => [
                 'connection' => 'rabbitmq',
                 'queue' => ['wordpress_publish'],
+                'processes' => 10,
+                'balance' => 'auto',
+                'minProcesses' => 2,
+                'maxProcesses' => 10,
+                'tries' => 1,
+            ],
+            'supervisor-9' => [
+                'connection' => 'rabbitmq',
+                'queue' => ['news-extractor'],
                 'processes' => 10,
                 'balance' => 'auto',
                 'minProcesses' => 2,

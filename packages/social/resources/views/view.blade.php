@@ -3,15 +3,12 @@
 @section('title', __('Social Sharing'))
 
 @section('heading')
-    {{ __('Social Sharing') }}
+    {{ __('Social Sharing') }} {{ $account->account }}
 @endsection
 
 @section('content')
     <!-- Create !-->
     <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-        <div>
-
-        </div>
         <div>
             <a class="btn btn-primary btn-md btn-flat" href="{{ route('social.credentials.create', ['account' => $account->id]) }}">
                 <i class="fa fa-plus mr-1"></i> Create Connection
@@ -43,16 +40,21 @@
                             {{  $config->type }}
                         </td>
                         <td>
-                           @todo get the access token validation or date when expires for each social account
+                           @todo get the access token validation or date when expires for each social account <br>
+                           @todo get the number of posts for each social account
                         </td>
                         <td class="text-right">
                             <a class="btn btn-info"
                                href="{{ route('social.login', ['account' => $config->social_account_id, 'provider' => $config->type]) }}">
                                 {{ __('Login') }} {{ $config->type }}
                             </a>
-                            <a class="btn btn-danger"
+                            <a class="btn btn-success"
                                href="{{ route('social.credentials.edit', ['account' => $config->social_account_id, 'provider' => $config->type]) }}">
                                 {{ __('Edit') }} {{ $config->type }}
+                            </a>
+                            <a class="btn btn-danger"
+                               href="{{ route('social.credentials.destroy', ['account' => $config->social_account_id, 'provider' => $config->type]) }}">
+                                {{ __('Delete') }} {{ $config->type }}
                             </a>
                         </td>
 
