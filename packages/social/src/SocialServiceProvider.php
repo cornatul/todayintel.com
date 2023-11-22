@@ -11,7 +11,7 @@ use Cornatul\Social\Service\ShareService;
 class SocialServiceProvider extends ServiceProvider
 {
 
-    public final function boot(): void
+    final public function boot(): void
     {
 
         $this->loadRoutesFrom(__DIR__ . '/../routes/social.php');
@@ -24,13 +24,9 @@ class SocialServiceProvider extends ServiceProvider
 
     }
 
-    public final function register(): void
+    final public function register(): void
     {
-        $this->app->singleton(SocialAccountsSeed::class, function ($app) {
-            return new SocialAccountsSeed();
-        });
 
-        $this->app->bind(ShareContract::class, ShareService::class);
         $this->commands([
             ShareCommand::class,
         ]);

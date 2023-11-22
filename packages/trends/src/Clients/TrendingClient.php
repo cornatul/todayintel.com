@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Cornatul\Trends\Clients;
 
-use Cornatul\News\Interfaces\TrendingInterface;
 use Cornatul\Trends\Connectors\NineGagConnector;
 use Cornatul\Trends\Connectors\RedditConnector;
 use Cornatul\Trends\Connectors\TwitterTrendsConnector;
+use Cornatul\Trends\Interfaces\TrendingInterface;
 use Cornatul\Trends\Requests\NineGangRequest;
 use Cornatul\Trends\Requests\RedditRequest;
 use Cornatul\Trends\Requests\TwitterTrendsRequest;

@@ -6,12 +6,13 @@ use Illuminate\Support\ServiceProvider;
 
 class TrendsServiceProvider extends ServiceProvider
 {
-    public final function boot(): void
+    final public function boot(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'trends');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/trends.php');
     }
 
-    public final function register(): void
+    final public function register(): void
     {
 
     }

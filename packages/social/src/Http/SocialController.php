@@ -3,13 +3,10 @@ declare(strict_types=1);
 
 namespace Cornatul\Social\Http;
 use Cornatul\Social\Actions\CreateNewSocialAccount;
-use Cornatul\Social\Contracts\SocialContract;
 use Cornatul\Social\Models\SocialAccount;
 use Cornatul\Social\Repositories\SocialRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Config;
 use Illuminate\View\View;
 
 /**
@@ -22,13 +19,13 @@ class SocialController extends Controller
 {
     protected  SocialRepository $socialRepository;
 
-    public final function __construct(SocialRepository $socialRepository)
+    final public function __construct(SocialRepository $socialRepository)
     {
         $this->middleware('auth');
         $this->socialRepository = $socialRepository;
     }
 
-    public final function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
+    final public function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
     {
         $accounts = SocialAccount::paginate();
         return view('social::index',
@@ -36,7 +33,7 @@ class SocialController extends Controller
         );
     }
 
-    public final function view(int $accountID): View
+    final public function view(int $accountID): View
     {
         $account = $this->socialRepository->getAccount($accountID);
         return view('social::view',
@@ -44,12 +41,12 @@ class SocialController extends Controller
         );
     }
 
-    public final function create(): View
+    final public function create(): View
     {
         return view('social::create');
     }
 
-    public final function save(CreateNewSocialAccount $request, SocialRepository $repository): RedirectResponse
+    final public function save(CreateNewSocialAccount $request, SocialRepository $repository): RedirectResponse
     {
         $repository->createAccount(
             $request->get('name'),
@@ -60,7 +57,7 @@ class SocialController extends Controller
     }
 
 
-    public final function edit(int $id): View
+    final public function edit(int $id): View
     {
         $account = SocialAccount::with('configuration')->find($id);
         return view('social::edit',
@@ -69,8 +66,13 @@ class SocialController extends Controller
     }
 
 
-    public final function update(int $id, SocialRepository $repository, CreateNewSocialAccount $request): RedirectResponse
+    final public function update(
+        int $id,
+        SocialRepository $repository,
+        CreateNewSocialAccount $request
+    ): RedirectResponse
     {
+        //todo move the request to the repository
         $repository->updateAccount(
             $id,
             $request->get('name'),
@@ -81,7 +83,7 @@ class SocialController extends Controller
     }
 
 
-    public final function destroy(int $id, SocialRepository $repository): RedirectResponse
+    final public function destroy(int $id, SocialRepository $repository): RedirectResponse
     {
         $repository->destroyAccount($id);
         return redirect()->route('social.index')->withMessage('Account has been deleted');

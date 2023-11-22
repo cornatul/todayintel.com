@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,65 +10,63 @@
             {{ config('app.name') }}
         @endif
     </title>
-    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <!-- Place favicon.ico in the root directory -->
 
-    <!-- CSS here -->
     <link rel="stylesheet" href="{{ asset('css/all.css') }}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
 </head>
 
 <body>
-<!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-<![endif]-->
 
-<!-- Add your site or application content here -->
+<header>
+    <div class="px-3 py-2 bg-dark text-white">
+        <div class="container pb-2">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center pt-4 my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                   <h1 class="h6 mb-0"> {{ config('app.name') }}</h1>
+                </a>
 
-<!-- header-area start -->
-<header id="top-menu" class="transparent-head">
-    <div id="theme_header_one" class="main-header-area pl-160 pr-160 pt-25 pb-20">
-        <div class="container-fluid">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-xl-2 col-lg-2 col-md-6 col-6">
-                    <div class="logo">
-                        <a class="logo-img" href="index.html">
-                            <img class="logo-1" src="{{ asset('img/logo/header_logo_one.svg') }}" alt="today intel">
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <li>
+                        <a href="#" class="nav-link text-secondary">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
+                            Home
                         </a>
-                    </div>
-                </div>
-                <div class="col-xl-10 col-lg-10 col-md-6 col-6 text-right">
-                    <div class="main-nav d-flex align-items-center justify-content-end justify-content-xl-between">
-                        <div class="main-menu d-none d-lg-block">
-                            <nav>
-                                <ul>
-                                    <li><a class="active" href="#">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="services.html">Services</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div class="right-nav d-md-flex align-items-center justify-content-end">
-                            <div class="hamburger-menu d-md-inline-block d-lg-none text-right">
-                                <a href="javascript:void(0);">
-                                    <i class="far fa-bars"></i>
-                                </a>
-                            </div>
-                            <div class="right-btn d-none d-md-inline-block ml-25">
-                                <ul class="d-flex align-items-center">
-                                    <li><a href="{{ route('login') }}" class="theme_btn theme_black_btn d-none d-sm-inline-block">
-                                            Login
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#table"/></svg>
+                            Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
+                            Products
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
+                            Customers
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+
 </header>
-<!-- header-area end -->
+

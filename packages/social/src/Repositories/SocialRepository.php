@@ -32,14 +32,14 @@ class SocialRepository implements SocialContract
         self::ACCOUNT_GOOGLE => Google::class,
     ];
 
-    public final function createAccount(string $name, int $userId): SocialAccount
+    final public function createAccount(string $name, int $userId): SocialAccount
     {
         return SocialAccount::create([
             'account' => $name,
             'user_id' => $userId,
         ]);
     }
-    public final function getAccount(int $accountID): SocialAccount
+    final public function getAccount(int $accountID): SocialAccount
     {
         return SocialAccount::with(['configuration'])->find($accountID);
     }
@@ -50,7 +50,7 @@ class SocialRepository implements SocialContract
      * @param int $userId
      * @return SocialAccount
      */
-    public final function updateAccount(int $id, string $account, int $userId): SocialAccount
+    final public function updateAccount(int $id, string $account, int $userId): SocialAccount
     {
         $account = SocialAccount::find($id);
         $account->account = $account;
@@ -59,7 +59,7 @@ class SocialRepository implements SocialContract
         return $account;
     }
 
-    public final function destroyAccount(int $id): void
+    final public function destroyAccount(int $id): void
     {
         $account = SocialAccount::find($id);
         $account->delete();

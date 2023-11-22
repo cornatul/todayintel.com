@@ -2,16 +2,16 @@
 
 namespace Cornatul\Social\Managers;
 
-class SocialSessionManager
+final class SocialSessionManager
 {
-    public final function setSocialSessions(int $account, string $provider): self
+    final public function setSocialSessions(int $account, string $provider): self
     {
         session()->put('account', $account);
         session()->put('provider', $provider);
         return $this;
     }
 
-    public final function destroySocialSessions(): self
+    final public function destroySocialSessions(): self
     {
         session()->remove('account');
         session()->remove('provider');
@@ -20,7 +20,7 @@ class SocialSessionManager
         return $this;
     }
 
-    public final function getSocialSession(string $sessionName): string
+    final public function getSocialSession(string $sessionName): string
     {
 
         $sessions =  [

@@ -6,6 +6,4 @@
             </a>
         </li>
     @endif
-
-
 @endauth
