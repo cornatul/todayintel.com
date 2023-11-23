@@ -51,7 +51,7 @@ export default {
     fetchNews(keyword) {
          this.loading = true;
 
-          fetch('https://api.lzomedia.com/find-news', {
+          fetch('https://api.lzomedia.com/google/news/search', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
