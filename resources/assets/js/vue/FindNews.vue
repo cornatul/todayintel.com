@@ -27,7 +27,7 @@
           <td>{{ article.title }}</td>
           <td>{{ article.description }}</td>
           <td class="text-right">
-            Extract
+            <a :href="article.link" target="_blank" class="btn btn-primary">Read</a>
           </td>
         </tr>
         </tbody>
@@ -51,7 +51,7 @@ export default {
     fetchNews(keyword) {
          this.loading = true;
 
-          fetch('https://api.lzomedia.com/google/news/search', {
+          fetch('https://api.todayintel.com/google/news/search', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
