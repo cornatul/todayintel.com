@@ -1,0 +1,1 @@
+console.log('Hello World, from Webpack Encore! Edit me in assets/js/main.js')

@@ -11,5 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
+//Vue js files
 mix.js('resources/assets/js/feeds.js', 'public/js').vue().sourceMaps();
-mix.js('resources/assets/js/news.js', 'public/js').vue().sourceMaps();
+mix.js('resources/assets/js/trending-keywords.js', 'public/js').vue().sourceMaps();
+mix.js('resources/assets/js/find-news.js', 'public/js').vue().sourceMaps();
+mix.js('resources/assets/js/hacker-news.js', 'public/js').vue().sourceMaps();
+
+
+
+//compress all the css files in one file
+mix.sass('resources/assets/scss/main.scss', 'public/css/main.css');
+
+
+//compress all the js files in one file
+mix.scripts([
+    'resources/assets/js/main.js',
+    ], 'public/js/all.js');

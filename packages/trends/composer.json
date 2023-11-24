@@ -1,0 +1,52 @@
+{
+    "name": "cornatul/trends",
+    "description": "A set of tools to find what is trending on the internet. ",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "role": "Developer",
+            "name": "Stefan I",
+            "email": "Stefan@Cornatul.com",
+            "homepage": "https://lzomedia.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cornatul\\Trends\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cornatul\\Trends\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "ext-simplexml": "*",
+        "guzzlehttp/guzzle": ">=7.5.0",
+        "illuminate/support": ">=9.0.0",
+        "spatie/laravel-data": ">=3.0.0",
+        "sammyjo20/saloon-cache-plugin": "^2.0",
+        "sammyjo20/saloon-laravel": "^2.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cornatul\\Trends\\TrendsServiceProvider"
+            ]
+        }
+    }
+}

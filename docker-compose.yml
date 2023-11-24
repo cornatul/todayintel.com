@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   app:
-    image: cornatul/news.ai
+    image: cornatul/todayintel.com:latest
     container_name: app_server
     restart: always
     networks:
@@ -30,6 +30,8 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_PORT: ${DB_PORT}
+    ports:
+        - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 

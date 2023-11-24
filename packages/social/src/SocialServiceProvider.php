@@ -3,13 +3,15 @@ declare(strict_types=1);
 namespace Cornatul\Social;
 
 
+use Cornatul\Social\Commands\ShareCommand;
 use Database\Seeders\SocialAccountsSeed;
 use Illuminate\Support\ServiceProvider;
-
+use Cornatul\Social\Contracts\ShareContract;
+use Cornatul\Social\Service\ShareService;
 class SocialServiceProvider extends ServiceProvider
 {
 
-    public final function boot(): void
+    final public function boot(): void
     {
 
         $this->loadRoutesFrom(__DIR__ . '/../routes/social.php');
@@ -22,10 +24,12 @@ class SocialServiceProvider extends ServiceProvider
 
     }
 
-    public final function register(): void
+    final public function register(): void
     {
-        $this->app->singleton(SocialAccountsSeed::class, function ($app) {
-            return new SocialAccountsSeed();
-        });
+
+        $this->commands([
+            ShareCommand::class,
+        ]);
+
     }
 }

@@ -1,4 +1,8 @@
 {
     "/js/feeds.js": "/js/feeds.js",
-    "/js/news.js": "/js/news.js"
+    "/js/trending-keywords.js": "/js/trending-keywords.js",
+    "/js/find-news.js": "/js/find-news.js",
+    "/js/hacker-news.js": "/js/hacker-news.js",
+    "/css/main.css": "/css/main.css",
+    "/js/all.js": "/js/all.js"
 }

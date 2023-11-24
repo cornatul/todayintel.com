@@ -28,6 +28,7 @@ class TelegramExtractorJob implements ShouldQueue
     private string $url;
 
     /**
+     * @todo Addd a class here that will be injected with the configuration
      * @throws TelegramSDKException
      */
     public function __construct(int $chatID, string $url)

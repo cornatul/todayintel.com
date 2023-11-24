@@ -21,6 +21,17 @@
       'AWS' => 'Aws\\Laravel\\AwsFacade',
     ),
   ),
+  'barryvdh/laravel-debugbar' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Debugbar' => 'Barryvdh\\Debugbar\\Facades\\Debugbar',
+    ),
+  ),
   'cornatul/crawler' => 
   array (
     'providers' => 
@@ -99,6 +110,17 @@
       0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     ),
   ),
+  'laravel/socialite' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
+    ),
+  ),
   'laravel/tinker' => 
   array (
     'providers' => 
@@ -138,6 +160,13 @@
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
+  'pdphilip/elasticsearch' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'PDPhilip\\Elasticsearch\\ElasticServiceProvider',
+    ),
+  ),
   'rap2hpoutre/fast-excel' => 
   array (
     'providers' => 
@@ -146,6 +175,17 @@
     ),
   ),
   'saloonphp/laravel-plugin' => 
+  array (
+    'aliases' => 
+    array (
+      'Saloon' => 'Saloon\\Laravel\\Facades\\Saloon',
+    ),
+    'providers' => 
+    array (
+      0 => 'Saloon\\Laravel\\SaloonServiceProvider',
+    ),
+  ),
+  'sammyjo20/saloon-laravel' => 
   array (
     'aliases' => 
     array (
